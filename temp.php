@@ -1,0 +1,27 @@
+<?php
+ header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept');
+ 
+  // Grab the posted data from the AJAX POST method ($.post)
+  $username = $_POST['username'];
+ 
+  $dbconn = pg_connect("host=localhost port=5432 dbname=besecure_data user=postgres password=postgres")
+    or die('Could not connect: ' . pg_last_error());
+
+// Performing SQL query
+$query = 'SELECT * FROM northern_ireland.tables_list_northern_ireland';
+$result = pg_query($query) or die('Query failed: ' . pg_last_error());
+
+// Fetch all the result in an array
+$out=pg_fetch_all($result);
+// encode the array to JSON format so it is usable in javascript
+print pg_num_rows($result)." rows ";
+
+print "returned";
+
+// Free resultset
+pg_free_result($result);
+
+// Closing connection
+pg_close($dbconn);
+ 
+?>
