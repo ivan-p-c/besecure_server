@@ -10,7 +10,7 @@ $area = strtolower($area);
 $dbconn = pg_connect("host=localhost port=5432 dbname=besecure_data user=postgres password=postgres")
 or die('Could not connect: ' . pg_last_error());
 
-$query = 'SELECT '.$attrname.' FROM northern_ireland.'.$tablename.' WHERE lower(ward) = \''.$area.'\'';	
+$query = 'SELECT '.$attrname.' FROM northern_ireland.'.$tablename.' WHERE lower(ward) = lower(\''.$area.'\')';	
 $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 $out=pg_fetch_assoc($result);
 
