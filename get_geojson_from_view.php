@@ -36,8 +36,6 @@ or die('Could not connect: ' . pg_last_error());
 # Build SQL SELECT statement and return the geometry as a GeoJSON element in EPSG: 4326
 //$sql = "SELECT " . pg_escape_string($fields) . ", st_asgeojson(transform(" . pg_escape_string($geomfield) . ",$srid)) AS geojson FROM " . pg_escape_string($geotable);
 $sql = 'SELECT st_asgeojson(st_transform(A.geom,4326)) AS geojson, A.name, B.'.$attrname.' AS descriptor FROM northern_ireland.osni_ward93 AS A, northern_ireland.'.$tablename.' AS B WHERE lower(A.name) = lower(B.ward)';
-
-//echo $sql;
  
 # Try query or error
 $rs = pg_query($dbconn, $sql) or die('Query failed: ' . pg_last_error());
@@ -75,7 +73,7 @@ $myfile = fopen("choropleth_results.geojson", "w");
 fwrite($myfile, $output);
 fclose($myfile);
 
-print $output;
+print -1;
 
 // Free resultset
 pg_free_result($rs);
