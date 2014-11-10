@@ -5,13 +5,14 @@ header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Ac
 // Grab the posted data from the AJAX POST method ($.post)
 $attrname = $_POST['attr'];
 $tablename = $_POST['table'];
+$schema = $_POST['cs_area'];
 //$area = $_POST['area'];
 //$area = strtolower($area);
  
 $dbconn = pg_connect("host=localhost port=5432 dbname=besecure_data user=postgres password=postgres")
 or die('Could not connect: ' . pg_last_error());
  
-$sql_maxmin = 'SELECT max('.$attrname.') AS maximum, min('.$attrname.') AS minimum FROM northern_ireland.'.$tablename;
+$sql_maxmin = 'SELECT max('.$attrname.') AS maximum, min('.$attrname.') AS minimum FROM '.$schema.'.'.$tablename;
 
 $rs_maxmin = pg_query($dbconn, $sql_maxmin) or die('Query failed: ' . pg_last_error());
 if (!$rs_maxmin) {

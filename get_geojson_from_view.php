@@ -27,15 +27,14 @@ function escapeJsonString($value) { # list from www.json.org: (\b backspace, \f 
 // Grab the posted data from the AJAX POST method ($.post)
 $attrname = $_POST['attr'];
 $tablename = $_POST['table'];
+$schema = $_POST['cs_area'];
 //$area = $_POST['area'];
 //$area = strtolower($area);
  
 $dbconn = pg_connect("host=localhost port=5432 dbname=besecure_data user=postgres password=postgres")
 or die('Could not connect: ' . pg_last_error());
  
-# Build SQL SELECT statement and return the geometry as a GeoJSON element in EPSG: 4326
-//$sql = "SELECT " . pg_escape_string($fields) . ", st_asgeojson(transform(" . pg_escape_string($geomfield) . ",$srid)) AS geojson FROM " . pg_escape_string($geotable);
-$sql = 'SELECT st_asgeojson(st_transform(A.geom,4326)) AS geojson, A.name, B.'.$attrname.' AS descriptor FROM northern_ireland.osni_ward93 AS A, northern_ireland.'.$tablename.' AS B WHERE lower(A.name) = lower(B.ward)';
+$sql = 'SELECT st_asgeojson(st_transform(A.geom,4326)) AS geojson, A.name, B.'.$attrname.' AS descriptor FROM '.$schema.'.osni_ward93 AS A, '.$schema.'.'.$tablename.' AS B WHERE lower(A.name) = lower(B.ward)';
  
 # Try query or error
 $rs = pg_query($dbconn, $sql) or die('Query failed: ' . pg_last_error());

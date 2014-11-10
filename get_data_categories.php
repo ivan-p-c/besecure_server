@@ -4,7 +4,7 @@
   // Grab the posted data from the AJAX POST method ($.post)
   //$username = $_POST['username'];
  
-  $dbconn = pg_connect("host=localhost port=5432 dbname=besecure_data user=postgres password=postgres")
+  $dbconn = pg_connect("host=cdcgeoserver.cloudapp.net port=5432 dbname=besecure_data user=postgres password=postgrescau5ew4y")
     or die('Could not connect: ' . pg_last_error());
 
 // Performing SQL query
