@@ -28,13 +28,15 @@ function escapeJsonString($value) { # list from www.json.org: (\b backspace, \f 
 $attrname = $_POST['attr'];
 $tablename = $_POST['table'];
 $schema = $_POST['cs_area'];
+$geo_name = $_POST['geo_name'];
+$geo_level = $_POST['geo_level'];
 //$area = $_POST['area'];
 //$area = strtolower($area);
  
 $dbconn = pg_connect("host=localhost port=5432 dbname=besecure_data user=postgres password=postgres")
 or die('Could not connect: ' . pg_last_error());
  
-$sql = 'SELECT st_asgeojson(st_transform(A.geom,4326)) AS geojson, A.name, B.'.$attrname.' AS descriptor FROM '.$schema.'.osni_ward93 AS A, '.$schema.'.'.$tablename.' AS B WHERE lower(A.name) = lower(B.ward)';
+$sql = 'SELECT st_asgeojson(st_transform(A.geom,4326)) AS geojson, A.name, B.'.$attrname.' AS descriptor FROM '.$schema.'.'.$geo_name.' AS A, '.$schema.'.'.$tablename.' AS B WHERE lower(A.name) = lower(B.'.$geo_level.')';
  
 # Try query or error
 $rs = pg_query($dbconn, $sql) or die('Query failed: ' . pg_last_error());
